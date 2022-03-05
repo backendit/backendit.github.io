@@ -1,0 +1,63 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - 标签 - backendit</title>
+        <link>http://example.org/tags/</link>
+        <description>Tags - 标签 - backendit</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jun 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Java</title>
+    <link>http://example.org/tags/java/</link>
+    <pubDate>Wed, 03 Jun 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/java/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Linux</title>
+    <link>http://example.org/tags/linux/</link>
+    <pubDate>Wed, 03 Jun 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/linux/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>工具</title>
+    <link>http://example.org/tags/%E5%B7%A5%E5%85%B7/</link>
+    <pubDate>Tue, 21 Apr 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/%E5%B7%A5%E5%85%B7/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>框架</title>
+    <link>http://example.org/tags/%E6%A1%86%E6%9E%B6/</link>
+    <pubDate>Sat, 21 Mar 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/%E6%A1%86%E6%9E%B6/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>MongoDB</title>
+    <link>http://example.org/tags/mongodb/</link>
+    <pubDate>Mon, 20 Jan 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/mongodb/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>数据库</title>
+    <link>http://example.org/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <pubDate>Mon, 20 Jan 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>集合</title>
+    <link>http://example.org/tags/%E9%9B%86%E5%90%88/</link>
+    <pubDate>Wed, 11 Dec 2019 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/%E9%9B%86%E5%90%88/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Eclipse</title>
+    <link>http://example.org/tags/eclipse/</link>
+    <pubDate>Mon, 11 Feb 2019 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/tags/eclipse/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>
