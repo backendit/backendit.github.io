@@ -1,2 +1,2 @@
-# github.io
+# beckendit.github.io
 my personal technology blog.
