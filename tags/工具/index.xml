@@ -4,18 +4,18 @@
         <link>http://example.org/tags/%E5%B7%A5%E5%85%B7/</link>
         <description>工具 - 标签 - backendit</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 21 Apr 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://example.org/tags/%E5%B7%A5%E5%85%B7/" rel="self" type="application/rss+xml" /><item>
-    <title>VirtualBox安装Ubuntu增强功能包及设置客户机与宿主机之间文件共享</title>
-    <link>http://example.org/posts/set_virtualbox-shared-files/</link>
+    <title>VirtualBox共享文件夹的设置</title>
+    <link>http://example.org/tools/virtualbox_share.html</link>
     <pubDate>Tue, 21 Apr 2020 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/set_virtualbox-shared-files/</guid>
+    <guid>http://example.org/tools/virtualbox_share.html</guid>
     <description><![CDATA[“因为我们自己使用的系统大多数是Windows或MacOS，所以个人学习Linux一般都会在虚拟机中安装Linux系统的各个发行版，如Cen]]></description>
 </item><item>
-    <title>MacOS上如何访问VirtualBox上的Linux虚拟机</title>
-    <link>http://example.org/posts/set_virtualbox_port_forward/</link>
+    <title>如何访问VirtualBox上的Linux虚拟机</title>
+    <link>http://example.org/tools/virtualbox_setting.html</link>
     <pubDate>Sat, 11 Apr 2020 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/set_virtualbox_port_forward/</guid>
+    <guid>http://example.org/tools/virtualbox_setting.html</guid>
     <description><![CDATA[一般学习Linux的时候，都要自己在虚拟机上安装一个Linux系统，比如Ubuntu、CentOS之类的。但是有时在虚拟机上的操作不太友好，]]></description>
 </item></channel>
 </rss>

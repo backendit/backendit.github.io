@@ -5,31 +5,31 @@
         <description>Java - 分类 - backendit</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jun 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://example.org/categories/java/" rel="self" type="application/rss+xml" /><item>
     <title>Effective-Java之使用静态方法代替构造器</title>
-    <link>http://example.org/posts/effective-java-static-med/</link>
+    <link>http://example.org/Java/static_method.html</link>
     <pubDate>Wed, 03 Jun 2020 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/effective-java-static-med/</guid>
+    <guid>http://example.org/Java/static_method.html</guid>
     <description><![CDATA[<p>相信很多开发者都知道有一本技术书籍叫<code>《Effective Java》</code>。这本书籍总结很多开发技巧、Java编程最佳实践，多读读会有很大的收获，对提高我们的Java编程技术有很大的帮助。</p>]]></description>
 </item><item>
     <title>Spring、SpringMVC、Mybatis框架搭建过程</title>
-    <link>http://example.org/posts/ssm-frameword-build/</link>
+    <link>http://example.org/Java/ssm_build.html</link>
     <pubDate>Sat, 21 Mar 2020 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/ssm-frameword-build/</guid>
+    <guid>http://example.org/Java/ssm_build.html</guid>
     <description><![CDATA[<p>在工作中的项目有使用Spring、SpringMVC、Mybatis组合框架开发的，通常简称为SSM。这里记录一下搭建的过程，以便以后有需要的是否参考这搭建。</p>]]></description>
 </item><item>
     <title>Effective-Java之构建器模式</title>
-    <link>http://example.org/posts/effective-java-build/</link>
+    <link>http://example.org/Java/builder_pattern.html</link>
     <pubDate>Tue, 11 Feb 2020 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/effective-java-build/</guid>
+    <guid>http://example.org/Java/builder_pattern.html</guid>
     <description><![CDATA[<p>当在构造器有很多参数需要传递来构造对象时，需要创建不同参数个数的构造器，而且有些参数是可选的，重叠构造器，导致构造器增多，客户端代码难以编写和阅读。</p>]]></description>
 </item><item>
-    <title>看着就够了，Java中的集合操作类详解</title>
-    <link>http://example.org/posts/java-collection-learn/</link>
+    <title>Java中相关集合操作类的基本使用</title>
+    <link>http://example.org/Java/java_collection_use.html</link>
     <pubDate>Wed, 11 Dec 2019 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/java-collection-learn/</guid>
+    <guid>http://example.org/Java/java_collection_use.html</guid>
     <description><![CDATA[<p>在java项目开发中，集合框架类非常常用，它比数组更加面向对象、灵活和实用，能够应用于开发中的不同场景，提高我们的开发效率。</p>]]></description>
 </item></channel>
 </rss>

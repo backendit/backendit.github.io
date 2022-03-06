@@ -4,27 +4,27 @@
     ><url>
             <loc>http://example.org/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/categories/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/effective-java-static-med/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/Java/static_method.html</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/java/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/categories/java/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/linux/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/categories/linux/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/posts/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/linux_common_use/</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/set_virtualbox-shared-files/</loc><lastmod>2020-04-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/Linux/linux_base_use.html</loc><lastmod>2020-06-03T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/tools/virtualbox_share.html</loc><lastmod>2020-04-21T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/%E5%B7%A5%E5%85%B7/</loc><lastmod>2020-04-21T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/categories/%E5%B7%A5%E5%85%B7/</loc><lastmod>2020-04-21T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/set_virtualbox_port_forward/</loc><lastmod>2020-04-11T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/ssm-frameword-build/</loc><lastmod>2020-03-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/tools/virtualbox_setting.html</loc><lastmod>2020-04-11T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/Java/ssm_build.html</loc><lastmod>2020-03-21T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/%E6%A1%86%E6%9E%B6/</loc><lastmod>2020-03-21T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/effective-java-build/</loc><lastmod>2020-02-11T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/Java/builder_pattern.html</loc><lastmod>2020-02-11T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/mongodb/</loc><lastmod>2020-01-20T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/mongodb_use_record/</loc><lastmod>2020-01-20T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/db/mongodb_use.html</loc><lastmod>2020-01-20T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2020-01-20T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2020-01-20T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/java-collection-learn/</loc><lastmod>2019-12-11T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/Java/java_collection_use.html</loc><lastmod>2019-12-11T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/%E9%9B%86%E5%90%88/</loc><lastmod>2019-12-11T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://example.org/tags/eclipse/</loc><lastmod>2019-02-11T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/eclipse_xml_errors/</loc><lastmod>2019-02-11T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://example.org/posts/base64encoder-error/</loc><lastmod>2018-02-11T00:00:00&#43;00:00</lastmod></url></urlset>
+            <loc>http://example.org/tools/eclipse_xml_err.html</loc><lastmod>2019-02-11T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://example.org/tools/base64_error.html</loc><lastmod>2018-02-11T00:00:00&#43;00:00</lastmod></url></urlset>

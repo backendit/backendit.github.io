@@ -4,11 +4,11 @@
         <link>http://example.org/tags/%E9%9B%86%E5%90%88/</link>
         <description>集合 - 标签 - backendit</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 11 Dec 2019 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://example.org/tags/%E9%9B%86%E5%90%88/" rel="self" type="application/rss+xml" /><item>
-    <title>看着就够了，Java中的集合操作类详解</title>
-    <link>http://example.org/posts/java-collection-learn/</link>
+    <title>Java中相关集合操作类的基本使用</title>
+    <link>http://example.org/Java/java_collection_use.html</link>
     <pubDate>Wed, 11 Dec 2019 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/java-collection-learn/</guid>
+    <guid>http://example.org/Java/java_collection_use.html</guid>
     <description><![CDATA[<p>在java项目开发中，集合框架类非常常用，它比数组更加面向对象、灵活和实用，能够应用于开发中的不同场景，提高我们的开发效率。</p>]]></description>
 </item></channel>
 </rss>

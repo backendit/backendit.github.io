@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MongoDB数据库日常实操总结 - backendit</title><meta name="Description" content=""><meta property="og:title" content="MongoDB数据库日常实操总结" />
+<meta property="og:description" content="MongoDB是由C&#43;&#43;编写的、基于分布式文件存储的，在NoSQL(Not Only SQL)中很流行的一种文档型数据库，其他较为流行的还有CouchDB、OrientDB等。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/db/mongodb_use.html" /><meta property="og:image" content="http://example.org/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-01-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-01-20T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="MongoDB数据库日常实操总结"/>
+<meta name="twitter:description" content="MongoDB是由C&#43;&#43;编写的、基于分布式文件存储的，在NoSQL(Not Only SQL)中很流行的一种文档型数据库，其他较为流行的还有CouchDB、OrientDB等。"/>
+<meta name="application-name" content="backendit">
+<meta name="apple-mobile-web-app-title" content="backendit"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/db/mongodb_use.html" /><link rel="prev" href="http://example.org/Java/java_collection_use.html" /><link rel="next" href="http://example.org/Java/builder_pattern.html" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MongoDB数据库日常实操总结",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/db\/mongodb_use.html"
+        },"image": ["http:\/\/example.org\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "数据库, MongoDB","wordcount":  7211 ,
+        "url": "http:\/\/example.org\/db\/mongodb_use.html","datePublished": "2020-01-20T00:00:00+00:00","dateModified": "2020-01-20T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "http:\/\/example.org\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "backendit"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="backendit"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>backendit</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="发表的文章"> 文章 </a><a class="menu-item" href="/tags/" title="标签云"> 标签 </a><a class="menu-item" href="/categories/" title="文章分类"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="backendit"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>backendit</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="发表的文章">文章</a><a class="menu-item" href="/tags/" title="标签云">标签</a><a class="menu-item" href="/categories/" title="文章分类">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">MongoDB数据库日常实操总结</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>backendit</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-01-20">2020-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7211 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;<span id="/db/mongodb_use.html" class="leancloud_visitors" data-flag-title="MongoDB数据库日常实操总结">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简述">简述</a></li>
+    <li><a href="#安装mongodb">安装MongoDB</a></li>
+    <li><a href="#初步使用mongodb">初步使用MongoDB</a></li>
+    <li><a href="#objectid">ObjectId</a></li>
+    <li><a href="#mongodb进阶">MongoDB进阶</a>
+      <ul>
+        <li><a href="#1数据迁移">1，数据迁移</a></li>
+        <li><a href="#2聚合aggregate">2，聚合(aggregate)</a></li>
+        <li><a href="#3索引">3，索引</a></li>
+        <li><a href="#4编写维护脚本">4，编写维护脚本</a></li>
+        <li><a href="#5集群">5，集群</a></li>
+      </ul>
+    </li>
+    <li><a href="#javaapi操作mongodb">JavaAPI操作MongoDB</a>
+      <ul>
+        <li><a href="#1使用spring集成的方式">1，使用Spring集成的方式</a></li>
+        <li><a href="#2使用驱动包的方式">2，使用驱动包的方式</a></li>
+      </ul>
+    </li>
+    <li><a href="#pythonapi操作mongodb">PythonAPI操作MongoDB</a></li>
+    <li><a href="#遇到的错误总结">遇到的错误总结</a>
+      <ul>
+        <li><a href="#1启动失败错误信息为db目录是只读的没有写权限">1）启动失败，错误信息为db目录是只读的，没有写权限</a></li>
+        <li><a href="#2db下的mongodlock文件">2）db下的mongod.lock文件</a></li>
+        <li><a href="#3再启动还是报错但下面给出提示说要使用--repair来修复">3）再启动还是报错，但下面给出提示，说要使用&ndash;repair来修复。</a></li>
+        <li><a href="#4报14错误">4）报14错误</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>MongoDB是由C++编写的、基于分布式文件存储的，在NoSQL(Not Only SQL)中很流行的一种文档型数据库，其他较为流行的还有CouchDB、OrientDB等。</p>
+<p>它跟MySQL这类的关系型数据库不同的地方在于，它的不严谨的结构化数据，每一条数据以文档的形式存储，数据结构以Key-Value形式组成。文档数据类似JSON对象，每个字段中又可包含其他对象、数组、文档等。支持Python、Java、Ruby等编程语言。</p>
+<h2 id="简述">简述</h2>
+<p>看下官网的首页介绍：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/database/mongo1.png"
+        data-srcset="/images/database/mongo1.png, /images/database/mongo1.png 1.5x, /images/database/mongo1.png 2x"
+        data-sizes="auto"
+        alt="/images/database/mongo1.png"
+        title="官网介绍" /></p>
+<p>翻译过来就是为现代应用而生的数据库。
+MongoDB是一款为现代应用开发者们和云时代而构建的通用的基于文档型的分布式数据库。没有数据库让你更有效率。</p>
+<p>MongoDB与MySQL的对比：</p>
+<table>
+<thead>
+<tr>
+<th>MongoDB</th>
+<th>MySQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据库</td>
+<td>数据库</td>
+</tr>
+<tr>
+<td>集合(collection)</td>
+<td>二维表</td>
+</tr>
+<tr>
+<td>文档(document)</td>
+<td>行(row)</td>
+</tr>
+<tr>
+<td>键</td>
+<td>字段名</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>无外键，_id自动设为主键</td>
+<td>PK/FK（主键/外键）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安装mongodb">安装MongoDB</h2>
+<p>MongoDB的安装很简单，下载安装包后解压到指定目录即可。
+如果想要在任何地方直接使用MongoDB命令，则需要配置环境变量。</p>
+<p>下载地址：<a href="https://www.mongodb.com/download-center#community" target="_blank" rel="noopener noreffer">https://www.mongodb.com/download-center#community</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 安装在local</span>
+$ <span class="nb">cd</span> /usr/local
+<span class="c1"># 下载安装包</span>
+$ sudo curl -O https://fastdl.mongodb.org/osx
+/mongodb-osx-ssl-x86_64-4.0.9.tgz
+<span class="c1"># 解压</span>
+$ sudo tar -zxvf mongodb-osx-ssl-x86_64-4.0.9.tgz
+<span class="c1"># 重命名为 mongodb 目录</span>
+$ sudo mv mongodb-osx-x86_64-4.0.9/ mongodb
+
+添加bin文件夹到<span class="nv">$PATH</span>：
+$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/mongodb/bin:<span class="nv">$PATH</span>
+</code></pre></div><p>使用export只是临时生效，如果想要永久生效，就要修改配置文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ open -e ~/.bash_profile
+或 $ sudo vi ~/.bash_profile
+<span class="c1"># 如下文件内容</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/mongodb/bin:<span class="nv">$PATH</span>
+<span class="c1"># 生效$ </span>
+$ <span class="nb">source</span> ~/.bash_profile
+</code></pre></div><p>这里是以MacOS为例，在其他类Linux系统中找到对应的profile文件修改。
+如果是Windows，也是下载安装包解压后，设置系统环境变量即可。</p>
+<h2 id="初步使用mongodb">初步使用MongoDB</h2>
+<p>下载好MongoDB安装包及配置好后，我们需要手动创建一个存放数据和日志文件的目录，一般会设置在MongoDB的安装目录下。</p>
+<p>创建数据库存储目录：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">cd</span> /usr/local/mongodb
+$ mkdir data/db
+$ mkdir logs
+$ <span class="nb">cd</span> logs
+$ touch mongodb.log
+</code></pre></div><p>然后我们启动数据库：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">cd</span> /usr/local/mongodb/bin
+$ ./mongod --dbpath<span class="o">=</span>/usr/local/mongodb/data/db
+</code></pre></div><p>如果没有手动指定数据库路径，那么默认的数据库路径为<code>/data/db</code>。</p>
+<p>如果控制台没有报错信息，显示已启动并且等待连接。此时可以执行mongo进行MongoDB终端进行验证。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongo  <span class="c1"># 如果没有配置到PATH需进到bin下执行</span>
+MongoDB shell version v4.0.9
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName<span class="o">=</span>mongodb
+Implicit session: session <span class="o">{</span> <span class="s2">&#34;id&#34;</span> : UUID<span class="o">(</span><span class="s2">&#34;644641d7-66ee-458a-bf8c-e4ff7ad1c7f2&#34;</span><span class="o">)</span> <span class="o">}</span>
+</code></pre></div><p>show dbs查看数据库只有admin、local、config等。</p>
+<p>也可以使用命令进行验证。</p>
+<pre><code>$ ps -ef|grep mongod
+# 或者查看27018端口
+$ lsof -i:27017
+</code></pre><p>由于上面的启动，MongoDB默认没有开启用户认证，所以所有的游客都有超级管理员的权限，即都可任意的操作任何的数据库，这样就会导致数据库不安全，数据库数据有安全风险。所以需要创建角色、用户并分配权限。</p>
+<p>首先需要在不开启验证的情况下，给admin分配角色，方便演示，实际中应要尽量复杂。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; use admin<span class="p">;</span>
+switched to db admin
+&gt; db.createUser<span class="o">({</span>
+      user : <span class="s2">&#34;admin&#34;</span>,
+			<span class="nb">pwd</span> : <span class="s2">&#34;123456&#34;</span>,
+			roles : <span class="o">[</span>
+			<span class="s2">&#34;clusterAdmin&#34;</span>,
+			<span class="s2">&#34;dbAdminAnyDatabase&#34;</span>,
+			<span class="s2">&#34;userAdminAnyDatabase&#34;</span>,
+			<span class="s2">&#34;readWriteAnyDatabase&#34;</span>
+			<span class="o">]</span>
+		<span class="o">})</span><span class="p">;</span>
+Successfully added user: <span class="o">{</span>
+  <span class="s2">&#34;user&#34;</span> : <span class="s2">&#34;admin&#34;</span>,
+  <span class="s2">&#34;roles&#34;</span> : <span class="o">[</span>
+    <span class="s2">&#34;clusterAdmin&#34;</span>,
+    <span class="s2">&#34;dbAdminAnyDatabase&#34;</span>,
+    <span class="s2">&#34;userAdminAnyDatabase&#34;</span>,
+    <span class="s2">&#34;readWriteAnyDatabase&#34;</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><p>某些操作需要admin的认证才能进行，比如<code>db.shutdownServer()</code>。</p>
+<p>数据库角色情况如下：</p>
+<p>数据库用户角色：
+read(只读)   readWrite(读写)</p>
+<p>数据库管理角色：
+dbAdmin 、 dbOwner 、userAdmin</p>
+<p>集群管理角色：
+clusterAdmin、clusterManager、hostManager、clusterMonitor</p>
+<p>所有数据库角色：
+readAnyDatabase                任何数据库的只读权限
+readWriteAnyDatabase        任何数据库的读写权限
+userAdminAnyDatabase      任何数据库用户的管理权限(无查写权限)
+dbAdminAnyDatabase         任何数据库的管理权限</p>
+<p>接下来我们再创建一个演示数据库：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongo
+&gt;use demo<span class="p">;</span> <span class="c1"># 有就切换到demo数据库，没有就新建</span>
+<span class="c1"># 如果是开启认证的，需要切换到admin认证后才能插入数据</span>
+&gt;db.demo.insert<span class="o">({</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;demo_db&#34;</span>,<span class="s2">&#34;passwd&#34;</span>:<span class="s2">&#34;12345&#34;</span><span class="o">})</span><span class="p">;</span>
+&gt;WriteResult<span class="o">({</span> <span class="s2">&#34;nInserted&#34;</span> : <span class="m">1</span> <span class="o">})</span>
+</code></pre></div><p>显示ok即插入数据成功了。注意创建一个新的数据库，要新插入一条数据才生效，否则，下次进来后还是不会看到上次新建的数据库的。</p>
+<p>我们再为这个数据库创建一个读写权限的用户，让访问这个数据库的用户必须是我们指定权限的用户方可。这样以后访问demo这个数据就可以用demo这个用户，而不用每次都用admin超级管理员登录。
+//为某个库创建一个用户</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">db.createUser<span class="o">({</span>
+    user:<span class="s1">&#39;demo&#39;</span>,
+    pwd:<span class="s1">&#39;123456&#39;</span>,
+    roles:<span class="o">[</span>
+    <span class="o">{</span>role:<span class="s1">&#39;readWrite&#39;</span>,db:<span class="s1">&#39;demo&#39;</span><span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">})</span><span class="p">;</span>
+</code></pre></div><p>这样之后就可以使用认证方式启动了。</p>
+<p>首先关闭数据库服务，不是后台启动(fork)的话，在终端直接Ctrl + C关闭即可。</p>
+<p>后台启动认证方式且把日志记录到/logs/mongdb.log文件中，方便排查问题。</p>
+<pre><code>$ ./mongod --dbpath=/usr/local/mongodb/data/db 
+           --logpath=/usr/local/mongodb/logs/mongodb.log
+           --fork
+           --ahth
+</code></pre><p>为了以后不需要每次启动都输入这么多参数，有种以配置文件启动的方式，一般都推荐这种方式启动，这样修改配置参数比较方便。</p>
+<p>首先在MongoDB的安装目录下新建一个config目录，在config目录下创建一个<code>mongodb.conf</code>的配置文件。然后写入简单的几个参数内容。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ mkdir config/mongodb.conf
+$ vi mongodb.conf
+<span class="nv">dbpath</span><span class="o">=</span>/usr/local/mongodbdata/db <span class="c1"># 数据库文件路径</span>
+<span class="nv">logpath</span><span class="o">=</span>/usr/local/mongodb/logs/mongodb.log <span class="c1"># 日志文件路径</span>
+<span class="nv">logappend</span><span class="o">=</span><span class="nb">true</span> <span class="c1"># 日志追加</span>
+<span class="nv">port</span><span class="o">=</span><span class="m">27017</span>
+<span class="nv">fork</span><span class="o">=</span><span class="nb">true</span>  <span class="c1"># 是否后台启动</span>
+<span class="nv">auth</span><span class="o">=</span><span class="nb">true</span>  <span class="c1"># 开启验证</span>
+</code></pre></div><p>然后以配置文件启动MongoDB：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongod -f ../config/mongodb.conf
+$ nohup ./mongod -f ../config/mongodb.conf <span class="c1"># 后台启动</span>
+</code></pre></div><p>然后mongo进行验证或查看27017端口是否开启。</p>
+<p>或许启动的时候会发现服务并没有成功启动，会遇到很多奇怪的错误，比如会遇到100、1、14 等错误代码。这个在最后会有总结。</p>
+<p>正确的关闭MongoDB服务的方式。
+记住，不要直接kill -9 pid 的方式来杀死MongoDB进程。而正常关闭的方法应该是在MongoDB shell中关闭：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongo
+$&gt; use admin<span class="p">;</span>
+$&gt; db.auth<span class="o">(</span><span class="s2">&#34;admin&#34;</span>,<span class="s2">&#34;123456&#34;</span><span class="o">)</span><span class="p">;</span>
+$&gt; db.shutdownServers<span class="o">()</span><span class="p">;</span> <span class="c1"># 此时会退出mongo终端</span>
+</code></pre></div><p>直接kill可能会遇到启动失败的问题。</p>
+<p>接下来演示下MongoDB在终端中的简单命令的使用。
+1 创建一个数据库</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongo
+$ show dbs<span class="p">;</span><span class="c1"># 查看当前所有数据库</span>
+<span class="c1"># 没有则创建，有则进入该数据库 记住只有插入一条数据后才会真正创建</span>
+$ use mydb<span class="p">;</span>
+<span class="m">2</span> 插入一条数据
+$ db.mydb.insert<span class="o">({</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;test_db&#34;</span>,<span class="s2">&#34;passwd&#34;</span>:<span class="s2">&#34;12345&#34;</span>,
+<span class="s2">&#34;createDate&#34;</span>:new Date<span class="o">()})</span><span class="p">;</span>
+<span class="m">3</span> 删除整个数据库
+$ db.dropDatabase<span class="o">()</span><span class="p">;</span>
+<span class="m">4</span> 创建数据库
+$ use mydb<span class="p">;</span>
+$ db.createCollection<span class="o">(</span><span class="s2">&#34;mycoll&#34;</span><span class="o">)</span><span class="p">;</span>
+$ show tables<span class="p">;</span><span class="c1"># 或 show collections; 查看当前所有集合</span>
+<span class="m">5</span> 删除集合
+$ db.mycoll.drop<span class="o">()</span><span class="p">;</span>
+<span class="m">6</span> 根据条件删除文档
+$ db.mycoll.remove<span class="o">({</span><span class="s1">&#39;title&#39;</span>:<span class="s1">&#39;test1111&#39;</span><span class="o">})</span>
+<span class="m">7</span> 查询文档
+$ db.mydb.find<span class="o">({})</span><span class="p">;</span>
+$ db.mydb.find<span class="o">({</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;teset&#34;</span><span class="o">})</span><span class="p">;</span>
+<span class="c1"># 排序 1-升序 -1-降序</span>
+$ db.mydb.find<span class="o">({</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;teset&#34;</span><span class="o">})</span>.sort<span class="o">({</span><span class="s2">&#34;age&#34;</span>:1<span class="o">})</span><span class="p">;</span>
+<span class="m">8</span> 高级查询
+<span class="c1"># &amp;and $or查询</span>
+$ db.mydb.find<span class="o">({</span>
+    <span class="nv">$AND</span>:<span class="o">[</span>
+      <span class="o">{</span>key1:value1<span class="o">}</span>,<span class="o">{</span>key2,value2<span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">})</span>.pretty<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 跳过或读取指定数量，可用于分页</span>
+$ db.mycoll.find<span class="o">({}</span>,<span class="o">{</span><span class="s2">&#34;title&#34;</span>:1,_id:<span class="s2">&#34;eee1&#34;</span><span class="o">})</span>.limit<span class="o">(</span>10<span class="o">)</span>
+.skip<span class="o">(</span>10<span class="o">)</span><span class="p">;</span>
+<span class="m">9</span> 聚合
+aggregate，用于处理数据，如求和，平均数等，并返回结果数据。
+db.mycoll.aggregate<span class="o">(</span> 
+<span class="o">[</span>
+  <span class="o">{</span> 
+    <span class="nv">$match</span> : <span class="o">{</span> 
+        score : <span class="o">{</span> <span class="nv">$gt</span> : 60, <span class="nv">$lte</span> : <span class="m">90</span> <span class="o">}</span> 
+    <span class="o">}</span> 
+  <span class="o">}</span>,
+  <span class="o">{</span> <span class="nv">$group</span>: <span class="o">{</span> 
+      _id: null, 
+      count: <span class="o">{</span> <span class="nv">$sum</span>: <span class="m">1</span> <span class="o">}</span> <span class="o">}</span> 
+  <span class="o">}</span>
+<span class="o">])</span><span class="p">;</span>
+</code></pre></div><p>MongoDB使用聚合管道，如$match,$sort,$limit等来进行聚合查询。</p>
+<p>一般比较常用日期进行查询，而MongoDB的日期格式不太一样，一般使用<code>ISODate</code>来进行日期的查询，同时配合<code>$gte</code>、<code>$lt</code>等来选择时间范围。</p>
+<p>查询2019整年的数据：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ db.mydb.find<span class="o">({</span>
+  <span class="s2">&#34;createTime&#34;</span>:<span class="o">{</span><span class="nv">$gte</span>:ISODate<span class="o">(</span><span class="s2">&#34;2019-01-01T00:00:00.000Z&#34;</span><span class="o">)</span>,
+       <span class="nv">$lt</span>:ISODate<span class="o">(</span><span class="s2">&#34;2019-21-31T23:59:59.000Z&#34;</span><span class="o">)}</span>
+<span class="o">})</span><span class="p">;</span>
+</code></pre></div><p>时间格式还可以是：<code>2019-21-31T23:59:59+0800</code> (时区问题)
+在使用终端或编程API插入时间格式时可以直接new Date()的形式。</p>
+<h2 id="objectid">ObjectId</h2>
+<p>一般我们插入一条数据，如果没有手动指定_id，那么MongoDB会自动生成一个ObjectId类型的24位的唯一标识符。
+这个标识符占用12字节的存储空间(每个字节由2个16位数字的组成)，故组成24个16位的数字的字符串。
+它的生成规则简单的说，12个字节中，前4个是时间戳，接着3个是主机及其的散列值(hash)，再接着2个是进程ID，最后3个字节是自增计数器。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/dbs/mongo-ObjectId.png"
+        data-srcset="/images/dbs/mongo-ObjectId.png, /images/dbs/mongo-ObjectId.png 1.5x, /images/dbs/mongo-ObjectId.png 2x"
+        data-sizes="auto"
+        alt="/images/dbs/mongo-ObjectId.png"
+        title="ObjectId示意图" /></p>
+<blockquote>
+<p>Returns a new ObjectId value. The 12-byte ObjectId value consists of:
+a 4-byte timestamp value, representing the ObjectId’s creation, measured in seconds since the Unix epoch
+a 5-byte random value
+a 3-byte incrementing counter, initialized to a random value</p>
+</blockquote>
+<p>MongoDB这样的ObjectId生成策略，一定程度下确保了在分布式高并发情况下生成唯一的主键，不会产生键冲突。</p>
+<h2 id="mongodb进阶">MongoDB进阶</h2>
+<p>除了以上基本的操作外，还要一些进阶级的操作，比如索引、数据迁移(导入导出备份还原)，数据库脚本辅助日常数据库维护、集群等等。</p>
+<p>除了上述的简单的MongoDB查询语句外，相对较为复杂的就是聚合查询了。可以支持一些复杂业务场景下的数据查询。</p>
+<h3 id="1数据迁移">1，数据迁移</h3>
+<p>在各个环境之间迁移数据是很频繁的事情，所以要熟悉数据迁移的常见操作。比如备份数据、还原数据，导入导出数据等。</p>
+<p>备份数据：
+使用<code>mongodump</code>命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">使用--help查看所有可用参数
+./mongodump --help
+<span class="c1"># 备份数据（指定集合,整库备份去掉-c）</span>
+./mongodump -h 127.0.0.1 --port<span class="o">=</span><span class="m">27017</span> -u admin -p <span class="m">123456</span>
+-d mdatabase -c mcoll -o /usr/mongodb-bak/
+</code></pre></div><p>使用mongorestore命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 使用--help查看所有可用参数</span>
+./mongorestore --help
+</code></pre></div><p>还原数据：
+使用<code>mongorestore</code>命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./mongorestore -h 127.0.0.1 --port<span class="o">=</span><span class="m">27017</span> -u admin -p <span class="m">123456</span>
+-d mdatabase -c mcoll --dir<span class="o">=</span>/usr/mongodb-bak/mcoll.bson
+</code></pre></div><p>如果只想备份或还原指定的条件的数据，使用如&ndash;query=&quot;{age:{$gte18}}&ldquo;等。还有更多的如-v查看更多详细日志信息，&ndash;objcheck在插入数据前进行检验等等，可以使用&ndash;help来具体查看。</p>
+<p>使用mongoexport导出数据，这种是导出一种json或excel格式文件(具体通过参数&ndash;type指定)。对应导入数据使用mongoimport命令。</p>
+<p>导出数据(<code>mongoexport</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 导出数据</span>
+./mongoexport -h 127.0.0.1 --port<span class="o">=</span><span class="m">27017</span> -u admin -p <span class="m">123456</span> -d mdatabase -c mcoll 
+-f _id,title --type<span class="o">=</span>json --query<span class="o">=</span><span class="s1">&#39;{}&#39;</span> --limit<span class="o">=</span><span class="m">100</span> -o /usr/mcoll.data
+</code></pre></div><p>也可以导出Excel文件的形式。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./mongoexport -h 127.0.0.1 -u root -p <span class="m">123456</span> -d mydatabase 
+-c mycoll —-query<span class="o">=</span>“<span class="o">{</span>createDate:<span class="o">{</span><span class="nv">$gt</span>:ISODate<span class="o">(</span><span class="s2">&#34;2020-10-02T07:58:51.000Z”),</span><span class="nv">$lt</span><span class="s2">:ISODate(&#34;</span>2020-10-03T07:58:51.000Z<span class="s2">&#34;)}}”
+</span><span class="s2"> —-type=csv —fields=“_id,title” -o /usr/local/export.csv
+</span></code></pre></div><p>导入数据(<code>mongoimport</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./mongoimport -h 127.0.0.1 --port <span class="m">27017</span> -u admin -p <span class="m">123456</span>  --type<span class="o">=</span>json
+--mode upsert -d mydb -c mycoll --file<span class="o">=</span>/usr/mycoll.dat
+</code></pre></div><p>这种方式还有个参数需学习：<code>--mode</code></p>
+<blockquote>
+<p>&ndash;mode=[insert|upsert|merge]           <br>
+insert: insert only. <!-- raw HTML omitted -->
+upsert: insert or replace existing documents. <!-- raw HTML omitted -->
+merge: insert or modify  existing documents. defaults to insert</p>
+</blockquote>
+<p>注意：如果是文件集合，存储平台的一些附件，比如fs.files，超过一定大小后(比如16M)就会被切割成多个文件片段，存储在fs.chunks中，所以在备份还原文件集合是注意操作的是两个集合。<code>fs.files </code>和 <code>fs.chunks</code>。</p>
+<h3 id="2聚合aggregate">2，聚合(aggregate)</h3>
+<p>find查询主要是查询查看数据，数据处理能力较弱。聚合可以方便处理和返回计算后的结果数据。</p>
+<p>例如：
+统计所有人的文章数量</p>
+<pre><code>db.mycoll.aggregate([{
+		 $group : {_id : &quot;$userName&quot;, 
+     num : {$sum : 1}}}])
+</code></pre><p>类似sql语句：select userName, count(*) from mycoll group by userName</p>
+<p>如果想联合查询：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">db.orders.aggregate<span class="o">([</span>
+   <span class="o">{</span>
+     <span class="nv">$lookup</span>:
+       <span class="o">{</span>
+         from: <span class="s2">&#34;inventory&#34;</span>,
+         localField: <span class="s2">&#34;item&#34;</span>,
+         foreignField: <span class="s2">&#34;sku&#34;</span>,
+         as: <span class="s2">&#34;inventory_docs&#34;</span>
+       <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">])</span>
+</code></pre></div><p>查询订单表对应商品的库存情况。即orders集合中item字段值=inventory集合中的sku字段值的查询结果。</p>
+<p>更多聚合管道自行查看文档。毕竟最好的学习方法就是看官方文档。（但如果不是翻墙，官网访问会卡到你想吐）。</p>
+<h3 id="3索引">3，索引</h3>
+<p>很多数据库都会有索引，它可以极大的提高数据查询效率。如果没有索引，在数据量大的时候，查询会<code>扫描全集合(全表)</code>来获取符合查询条件的记录，这种查询效率当然会差。</p>
+<p>索引是一种特殊的数据结构，原理是使用类似BTree的数据结构进行对一列或几列的值进行排序，并持久化存储易于遍历读取的集合中。更深原理需要深研。</p>
+<p>MongoDB创建数据默认都会创建一个_id索引，所以我们用_id查询的时候都会效率比较高。可以根据需求创建索引。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">查看索引：
+db.getCollection<span class="o">(</span><span class="s2">&#34;mycoll&#34;</span><span class="o">)</span>.getIndexes<span class="o">()</span><span class="p">;</span>
+
+创建索引：
+db.mycoll.createIndex<span class="o">({</span><span class="s2">&#34;title&#34;</span>:1,<span class="s2">&#34;num&#34;</span>:-1<span class="o">})</span>
+<span class="c1"># 删除索引</span>
+db.getCollection<span class="o">(</span><span class="s1">&#39;mycoll&#39;</span><span class="o">)</span>.dropIndex<span class="o">(</span><span class="s1">&#39;索引名&#39;</span><span class="o">)</span><span class="p">;</span>
+</code></pre></div><p>索引虽然能提高查询效率，但会占内存，过多的索引会影响数据的写入。所以索引适合在数据读多于写的情形。</p>
+<h3 id="4编写维护脚本">4，编写维护脚本</h3>
+<p>一些日常的数据库数据的维护，如操作修改数据，查询数据等，需要常常编写查询语句，那么就可以编写成js脚本，执行脚本即可。</p>
+<p>场景：需要将一个集合中的前1000条数据以dump的形式导出来，那么mongodump是不支持limit的，又不能使用mongoexport导出，怎么办？
+先查询出前1000条数据，然后导到新建的一个临时集合中</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">db.mycoll.find<span class="o">({})</span>.limit<span class="o">(</span>1000<span class="o">)</span>.forEach<span class="o">(</span><span class="k">function</span><span class="o">(</span>c<span class="o">){</span>
+  db.tempcoll.insert<span class="o">(</span>x<span class="o">)</span><span class="p">;</span>
+<span class="o">})</span>
+</code></pre></div><p>使用forEach循环查询到另一个临时的集合中，再使用mongodump。</p>
+<p>在简单处理一些数据时，我们也可以类似的编写一些脚本来维护，其脚本类似js，保存后是js文件的形式，在mongo终端中执行。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">db.orders.find<span class="o">({})</span>.forEach<span class="o">(</span><span class="k">function</span><span class="o">(</span>d<span class="o">){</span>
+   var <span class="nv">oid</span> <span class="o">=</span> d._id<span class="p">;</span>
+   var <span class="nv">bookId</span> <span class="o">=</span> d.bookId<span class="p">;</span>
+   <span class="c1"># 根据bookId查找</span>
+   var <span class="nv">bookDoc</span> <span class="o">=</span> db.books.find<span class="o">({</span><span class="s2">&#34;_id&#34;</span>:ObjectId<span class="o">(</span>bookId<span class="o">)})</span><span class="p">;</span>
+   <span class="c1"># 找不到就插入一条数据</span>
+   <span class="k">if</span><span class="o">(</span><span class="nv">bookDoc</span><span class="o">==</span>null<span class="o">){</span>
+     var <span class="nv">nbdoc</span> <span class="o">=</span> db.ia_resource_catalog.insertOne<span class="o">(</span>
+       <span class="o">{</span><span class="s2">&#34;bookName&#34;</span>:<span class="s2">&#34;数据库性能优化&#34;</span>,<span class="s2">&#34;price&#34;</span>:<span class="s2">&#34;88.00&#34;</span><span class="o">}</span>
+     <span class="o">)</span><span class="p">;</span>
+     <span class="c1"># 获取插入后的id</span>
+     var <span class="nv">nbId</span> <span class="o">=</span> nbdoc.insertedId<span class="p">;</span> <span class="c1"># ObjectId类型</span>
+     <span class="c1"># 截取里面字符串 ObjectId(&#39;dsfdsf12131sfds&#39;)</span>
+     var <span class="nv">newnId</span> <span class="o">=</span> ncId.toString<span class="o">()</span>.substr<span class="o">(</span>10<span class="o">)</span>.replace<span class="o">(</span><span class="s1">&#39;&#34;)&#39;</span>,<span class="s1">&#39;&#39;</span><span class="o">)</span><span class="p">;</span>
+     <span class="c1"># 更新orders</span>
+     db.orders.update<span class="o">({</span>
+       <span class="o">{</span><span class="s2">&#34;_id&#34;</span>:oid<span class="o">}</span>,
+       <span class="o">{</span><span class="nv">$set</span>:<span class="o">{</span><span class="s2">&#34;bookId&#34;</span>:newbId<span class="o">}}</span>
+     <span class="o">})</span><span class="p">;</span>
+     print<span class="o">(</span><span class="s1">&#39;更新完成&#39;</span><span class="o">)</span><span class="p">;</span>
+   <span class="o">}</span>
+<span class="o">})</span><span class="p">;</span>
+</code></pre></div><p>上面是编写了查询后更新一些字段的脚本，保存后上传到mongodb服务器，然后通过load命令执行脚本。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./mongo
+use mydb<span class="p">;</span>
+auth<span class="o">(</span><span class="s2">&#34;admin&#34;</span>,<span class="s2">&#34;123456&#34;</span><span class="o">)</span><span class="p">;</span>
+load<span class="o">(</span><span class="s1">&#39;/usr/local/findUpdate.js&#39;</span><span class="o">)</span>
+</code></pre></div><p>使用mongoBooster客户端可以在界面上直接编写js脚本。</p>
+<p>执行js脚本，可以在mongoBooster直接打开脚本执行，也可以在mongo终端执行，在终端执行如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./mongo
+&gt;use mydb<span class="p">;</span>
+&gt;db.auth<span class="o">(</span><span class="s1">&#39;admin&#39;</span>,<span class="s1">&#39;123456’);
+</span><span class="s1">&gt;load(&#39;</span>/路径/test.js<span class="err">&#39;</span><span class="o">)</span>
+</code></pre></div><h3 id="5集群">5，集群</h3>
+<p>MongoDB的集群，即MongoDB的<code>复制(副本集，replSet)</code>，提供数据的冗余备份，从主节点上将数据同步到其他服务器上，提供了数据的安全性和可用性，并能够在一节点硬件故障或服务中断时能够恢复数据。</p>
+<p>通常的集群是一主一从或一主多从，主节点负责与客户端进行读写数据通信，从节点定期轮询获取主节点记录的数据操作，然后在副本集中执行这些操作，保存数据与主节点的一致。</p>
+<p>使用终端工具连接MongoDB服务时，看到连接信息中有Replication的，其实就是从节点了。</p>
+<p>下面的涉及集群的一些操作命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#查看副本集的配置</span>
+&gt; rs.conf<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 查看副本集的状态</span>
+&gt;  rs.status<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 查看是否是主节点</span>
+&gt; db.isMaster<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 启动MongoDB服务时，通过 --replSet 选项来启动mongoDB</span>
+&gt; mongod --port <span class="s2">&#34;PORT&#34;</span> --dbpath <span class="s2">&#34;YOUR_DB_DATA_PATH&#34;</span> --replSet <span class="s2">&#34;REPLICA_SET_INSTANCE_NAME&#34;</span>
+<span class="c1"># 在Mongo客户端使用命令来启动一个新的副本集</span>
+&gt; rs.initiate<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 添加一个副本集</span>
+&gt; rs.add<span class="o">(</span>HOST:PORT<span class="o">)</span><span class="p">;</span>
+<span class="c1"># 移除一个副本集</span>
+&gt; rs.remove<span class="o">(</span>HOST:PORT<span class="o">)</span><span class="p">;</span>
+</code></pre></div><p>总结遇到过的一个问题，就是在执行还原数据或导入数据时，在控制台一直显示某个进度，操作进行不下去，还以为是数据问题，后排查集群配置发现有一个节点挂掉了。解决方法就是恢复启动下这个节点或删除这个节点。</p>
+<h2 id="javaapi操作mongodb">JavaAPI操作MongoDB</h2>
+<p>使用Java API操作MongoDB有两种方式，一种是与Spring框架集成的方式，另一种是直接引入MongoDB驱动jar包，使用jar包中的方法。</p>
+<h3 id="1使用spring集成的方式">1，使用Spring集成的方式</h3>
+<p>一般在项目中都使用框架，那么可以使用spring data中的spring-data-mongodb进行配置，后续就可以方便的使用mongoTemplate进行操作了。</p>
+<p>这里是是针对Spring4 + MongoDB4以上版本。</p>
+<p>主要做以下步骤进行实现：</p>
+<p>1）引入Spring data MongoDB</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.rainingsince<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>spring-data-mongodb<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.1.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div><p>2）进行相关配置
+mongo-config.xml</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.springframework.org/schema/beans&#34;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span> 
+  <span class="na">xmlns:context=</span><span class="s">&#34;http://www.springframework.org/schema/context&#34;</span>
+  <span class="na">xmlns:mongo=</span><span class="s">&#34;http://www.springframework.org/schema/data/mongo&#34;</span>
+    <span class="na">xmlns:mvc=</span><span class="s">&#34;http://www.springframework.org/schema/mvc&#34;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://www.springframework.org/schema/beans 
+</span><span class="s">    http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span class="s">    http://www.springframework.org/schema/context 
+</span><span class="s">    http://www.springframework.org/schema/context/spring-context.xsd
+</span><span class="s">      http://www.springframework.org/schema/mvc  
+</span><span class="s">  http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+</span><span class="s">    http://www.springframework.org/schema/data/mongo
+</span><span class="s">    http://www.springframework.org/schema/data/mongo/spring-mongo-1.4.xsd&#34;</span><span class="nt">&gt;</span>
+​
+  <span class="c">&lt;!-- 根据配置获取MongoDB实例 --&gt;</span>
+  <span class="nt">&lt;mongo:mongo</span> <span class="na">id=</span><span class="s">&#34;mongo&#34;</span> <span class="na">host=</span><span class="s">&#34;${mongo.host}&#34;</span> <span class="na">port=</span><span class="s">&#34;${mongo.port}&#34;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;mongo:options</span> <span class="na">connections-per-host=</span><span class="s">&#34;${mongo.connectionsPerHost}&#34;</span>
+      <span class="na">threads-allowed-to-block-for-connection-multiplier=</span><span class="s">&#34;${mongo.threadsAllowedToBlockForConnectionMultiplier}&#34;</span>
+      <span class="na">connect-timeout=</span><span class="s">&#34;${mongo.connectTimeout}&#34;</span> 
+      <span class="na">max-wait-time=</span><span class="s">&#34;${mongo.maxWaitTime}&#34;</span>
+      <span class="na">auto-connect-retry=</span><span class="s">&#34;${mongo.autoConnectRetry}&#34;</span> 
+      <span class="na">socket-keep-alive=</span><span class="s">&#34;${mongo.socketKeepAlive}&#34;</span>
+      <span class="na">socket-timeout=</span><span class="s">&#34;${mongo.socketTimeout}&#34;</span> 
+      <span class="na">slave-ok=</span><span class="s">&#34;${mongo.slaveOk}&#34;</span>
+      <span class="na">write-number=</span><span class="s">&#34;1&#34;</span> 
+      <span class="na">write-timeout=</span><span class="s">&#34;0&#34;</span> 
+      <span class="na">write-fsync=</span><span class="s">&#34;true&#34;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/mongo:mongo&gt;</span>
+​
+  <span class="c">&lt;!-- MongoDB工厂 --&gt;</span>
+  <span class="nt">&lt;mongo:db-factory</span> <span class="na">dbname=</span><span class="s">&#34;jyxiaoka&#34;</span> <span class="na">mongo-ref=</span><span class="s">&#34;mongo&#34;</span> <span class="na">id=</span><span class="s">&#34;mongoDbFactory&#34;</span> <span class="na">username=</span><span class="s">&#34;${mongo.user}&#34;</span> <span class="na">password=</span><span class="s">&#34;${mongo.pwd}&#34;</span><span class="nt">/&gt;</span>
+​
+  <span class="c">&lt;!-- MongoDB操作对象 用它来完成对MongoDB的增删改查操作 --&gt;</span>
+  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;mongoTemplate&#34;</span> <span class="na">class=</span><span class="s">&#34;org.springframework.data.mongodb.core.MongoTemplate&#34;</span><span class="nt">&gt;</span>  
+        <span class="nt">&lt;constructor-arg</span> <span class="na">name=</span><span class="s">&#34;mongoDbFactory&#34;</span> <span class="na">ref=</span><span class="s">&#34;mongoDbFactory&#34;</span><span class="nt">/&gt;</span>  
+  <span class="nt">&lt;/bean&gt;</span> 
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div><p>mongo.properties:</p>
+<pre><code>mongo.host=127.0.0.1
+mongo.port=27017
+mongo.user=admin
+mongopass=123456
+mongo.connectionsPerHost=8
+mongo.threadsAllowedToBlockForConnectionMultiplier=4
+mongo.connectTimeout=1500
+mongo.maxWaitTime=1500
+mongo.autoConnectRetry=true
+mongo.socketKeepAlive=true
+mongo.socketTimeout=1500
+mongo.slaveOk=true
+</code></pre><p>applicationContext.xml</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!-- &lt;context:property-placeholder location=&#34;classpath:application.properties&#34; /&gt;--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&#34;annotationPropertyConfigurer&#34;</span> <span class="na">class=</span><span class="s">&#34;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&#34;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#34;locations&#34;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;list&gt;</span>
+        <span class="nt">&lt;value&gt;</span>classpath:mongo.properties<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;value&gt;</span>classpath:.db.properties<span class="nt">&lt;/value&gt;</span>
+     <span class="nt">&lt;/list&gt;</span>
+  <span class="nt">&lt;/property&gt;</span>
+ <span class="nt">&lt;/bean&gt;</span>
+<span class="c">&lt;!-- 引入MongoDB配置 --&gt;</span>
+<span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&#34;mongo-config.xml&#34;</span> <span class="nt">/&gt;</span>
+</code></pre></div><p>3）编写公共的Dao</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.jyxiaoka.dao</span><span class="o">;</span>
+<span class="err">​</span>
+<span class="cm">/**
+</span><span class="cm"> * 定义操作MongoDB的泛型接口
+</span><span class="cm"> * @param T (尖括号编译不过，只能用&#39;代替它了)
+</span><span class="cm">
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IBaseMongoDao</span><span class="sc">&#39;T&#39;</span> <span class="o">{</span>
+<span class="err">​</span>
+  <span class="cm">/**
+</span><span class="cm">   * 新增一条数据
+</span><span class="cm">   * @param t
+</span><span class="cm">   * @return
+</span><span class="cm">      */</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 根据id删除一条数据
+</span><span class="cm">   * @param id
+</span><span class="cm">   * @return
+</span><span class="cm">      */</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">);</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 更新数据
+</span><span class="cm">   * @param t
+</span><span class="cm">      */</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="err">​</span>
+<span class="kn">package</span> <span class="nn">com.jyxiaoka.dao.impl</span><span class="o">;</span>
+<span class="err">​</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.mongodb.core.MongoTemplate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.mongodb.core.query.Criteria</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+<span class="err">​</span>
+<span class="kn">import</span> <span class="nn">com.jyxiaoka.dao.IBaseMongoDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.mysql.cj.Query</span><span class="o">;</span>
+<span class="err">​</span>
+<span class="cm">/**
+</span><span class="cm"> * 定义操作MongoDB的泛型接口实现类
+</span><span class="cm"> * @param T 
+</span><span class="cm"> */</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BaseMongoDaoImpl</span><span class="sc">&#39;T&#39;</span> <span class="kd">implements</span> <span class="n">IBaseMongoDao</span><span class="sc">&#39;T&#39;</span> <span class="o">{</span>
+
+  <span class="nd">@Autowired</span>
+  <span class="kd">private</span> <span class="n">MongoTemplate</span> <span class="n">mongoTemplate</span><span class="o">;</span>
+<span class="err">​</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">T</span> <span class="n">insertedT</span> <span class="o">=</span> <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">insertedT</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">1</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="err">​</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Object</span> <span class="n">object</span> <span class="o">=</span> <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+    <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="err">​</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+
+  <span class="o">}</span>
+<span class="err">​</span>
+<span class="o">}</span>
+</code></pre></div><p>就可以使用这个dao来操作MongoDB数据库了。</p>
+<h3 id="2使用驱动包的方式">2，使用驱动包的方式</h3>
+<p>引入jar包。通过maven引入或手动引入。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.mongodb<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mongo-java-driver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.12.7<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div><p>然后编写简单的操作代码，其他的看API写即可。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">MongoClient</span> <span class="nf">getMongoClient</span><span class="o">(){</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mongoClient</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">MongoCredential</span> <span class="n">credential</span> <span class="o">=</span> <span class="n">MongoCredential</span><span class="o">.</span><span class="na">createCredential</span><span class="o">(</span>
+          <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">db</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">pass</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">());</span> 
+      <span class="n">ServerAddress</span> <span class="n">serverAddress</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerAddress</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">host</span><span class="o">,</span> <span class="n">27017</span><span class="o">);</span> 
+      <span class="n">mongoClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MongoClient</span><span class="o">(</span><span class="n">serverAddress</span><span class="o">,</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">credential</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">mongoClient</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 根据时间获取集合数据
+</span><span class="cm">   * @param collection
+</span><span class="cm">   * @throws ParseException 
+</span><span class="cm">      */</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">findCollectionData</span><span class="o">(</span><span class="n">String</span> <span class="n">collection</span><span class="o">)</span> <span class="kd">throws</span>     <span class="n">ParseException</span><span class="o">{</span>
+    
+    <span class="n">MongoClient</span> <span class="n">mongoClient</span> <span class="o">=</span> <span class="n">getMongoClient</span><span class="o">();</span>
+    <span class="n">MongoDatabase</span> <span class="n">db</span> <span class="o">=</span> <span class="n">mongoClient</span><span class="o">.</span><span class="na">getDatabase</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">db</span><span class="o">);</span>
+    <span class="n">MongoCollection</span><span class="err">&#39;</span><span class="n">Document</span><span class="err">&#39;</span> <span class="n">coll</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">getCollection</span><span class="o">(</span><span class="n">collection</span><span class="o">);</span>
+    
+    <span class="n">BasicDBObject</span> <span class="n">query</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BasicDBObject</span><span class="o">();</span>
+    <span class="c1">//query.append(&#34;status&#34;, 1);
+</span><span class="c1"></span>    
+    <span class="c1">//block中处理数据
+</span><span class="c1"></span>    <span class="n">Block</span><span class="err">&#39;</span><span class="n">Document</span><span class="err">&#39;</span> <span class="n">block</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Block</span><span class="err">&#39;</span><span class="n">Document</span><span class="err">&#39;</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Document</span> <span class="n">document</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">);</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">title</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">};</span>
+    
+    <span class="c1">//coll.find(query).forEach(block);//过时
+</span><span class="c1"></span>    <span class="n">MongoCursor</span><span class="o">&lt;</span><span class="n">Document</span><span class="o">&gt;</span> <span class="n">docs</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">query</span><span class="o">).</span><span class="na">iterator</span><span class="o">();</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">docs</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="n">docs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">title</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div><p>第二种方式适合在需要使用程序实现一些对MongoDB的维护，如查询一些数据并导出、实现在库内批量对数据进行更新等场景时，作辅助实现。</p>
+<h2 id="pythonapi操作mongodb">PythonAPI操作MongoDB</h2>
+<p>Python也有一些库可以用来帮助我们操作MongoDB。</p>
+<p>需要安装MongoDB驱动：PyMongo</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ python3 -m pip3 install pymongo
+$ python3 -m pip3 install <span class="nv">pymongo</span><span class="o">==</span>3.5.1
+$ python3 -m pip3 install --upgrade pymongo
+</code></pre></div><p>然后就可以简单的操作MongoDB了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/usr/bin/python3
+</span><span class="cp"></span>import pymongo
+<span class="nv">myclient</span> <span class="o">=</span> pymongo.MongoClient<span class="o">(</span><span class="s2">&#34;mongodb://localhost:27017/&#34;</span><span class="o">)</span>
+<span class="nv">mydb</span> <span class="o">=</span> myclient<span class="o">[</span><span class="s2">&#34;mydb&#34;</span><span class="o">]</span>
+......
+</code></pre></div><h2 id="遇到的错误总结">遇到的错误总结</h2>
+<p>最后总结遇到的一些问题，避免再次入坑。</p>
+<p>配置文件启动正常是这样滴：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./mongod -f ../config/mongodb.conf
+about to fork child process, waiting <span class="k">until</span> server is ready <span class="k">for</span> connections.
+forked process: <span class="m">2257</span>
+child process started successfully, parent exiting
+</code></pre></div><h3 id="1启动失败错误信息为db目录是只读的没有写权限">1）启动失败，错误信息为db目录是只读的，没有写权限</h3>
+<p>解决：添加用户和写权限</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ sudo chown -R <span class="nv">$USER</span> /data/db 
+$ sudo chmod -R go+w /data/db
+</code></pre></div><h3 id="2db下的mongodlock文件">2）db下的mongod.lock文件</h3>
+<p>报错信息：
+Detected unclean shutdown /usr/local/mongodb/data/db/mongod.lock is not empty.
+或
+about to fork child process, waiting until server is ready for connections.forked process: 2722ERROR: child process failed, exited with error number 100 To see additional information in this output, start without the &ldquo;&ndash;fork&rdquo; option.
+100 是指锁了，配置文件没配置好。
+解决：把db下面的mongod.lock文件删除再重新尝试启动。</p>
+<h3 id="3再启动还是报错但下面给出提示说要使用--repair来修复">3）再启动还是报错，但下面给出提示，说要使用&ndash;repair来修复。</h3>
+<p>于是使用修复：
+TORAGE  [initandlisten] An incomplete repair has been detected! This is likely because a repair operation unexpectedly failed before completing. MongoDB will not start up again without &ndash;repair。
+$ sudo mongod &ndash;repair &ndash;dbpath /usr/local/mongodb/data/db/
+修复后再启动就正常了。
+有时候没有正常关闭时，比如直接kill 进程，再次启动可能会出现这个错误。所以最好还是进入终端mongo去关闭。db.shutdownServers();</p>
+<h3 id="4报14错误">4）报14错误</h3>
+<p>使用配置文件启动失败，但是直接使用命令行直接启动就正常，所以就会知道是配置文件的问题了，比如&ndash;repair这个参数配置开启的话就会启动失败，所以把它屏蔽掉就正常了。</p>
+<p>如果还有错误的话，直接看/logs/mongodb.log日志文件就能发现问题出在哪了。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-01-20</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://example.org/db/mongodb_use.html" data-title="MongoDB数据库日常实操总结" data-hashtags="数据库,MongoDB"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://example.org/db/mongodb_use.html" data-hashtag="数据库"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://example.org/db/mongodb_use.html" data-title="MongoDB数据库日常实操总结"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://example.org/db/mongodb_use.html" data-title="MongoDB数据库日常实操总结"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://example.org/db/mongodb_use.html" data-title="MongoDB数据库日常实操总结"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>,&nbsp;<a href="/tags/mongodb/">MongoDB</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/Java/java_collection_use.html" class="prev" rel="prev" title="Java中相关集合操作类的基本使用"><i class="fas fa-angle-left fa-fw"></i>Java中相关集合操作类的基本使用</a>
+            <a href="/Java/builder_pattern.html" class="next" rel="next" title="Effective-Java之构建器模式">Effective-Java之构建器模式<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"6qv6pVH0bHACP8wyqXNCgWKc-gzGzoHsz","appKey":"sq3plPOv9qQbP3RTopbRJ7gO","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"来都来了，请留下您的足迹~","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
